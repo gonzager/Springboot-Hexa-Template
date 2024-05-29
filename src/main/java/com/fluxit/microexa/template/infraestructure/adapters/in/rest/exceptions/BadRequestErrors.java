@@ -1,6 +1,12 @@
 package com.fluxit.microexa.template.infraestructure.adapters.in.rest.exceptions;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.http.HttpStatus;
 import java.util.List;
-public record BadRequestErrors(HttpStatus status, List<String> errors) {
+@Data
+@AllArgsConstructor
+public class BadRequestErrors {
+    private HttpStatus status;
+    private List<String> errors;
 }
