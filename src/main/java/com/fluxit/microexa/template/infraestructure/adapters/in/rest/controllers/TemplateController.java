@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -95,7 +96,8 @@ public class TemplateController {
                     content = @Content)
     })
     @PostMapping
-    public TemplateResponseDTO getTemplate(@Valid @RequestBody TemplateRequestDTO templateRequestDTO) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public TemplateResponseDTO createTemplate(@Valid @RequestBody TemplateRequestDTO templateRequestDTO) {
         return TemplateResponseDTO.from(templateService.createTemplate(templateRequestDTO.toTemplate()));
     }
 
