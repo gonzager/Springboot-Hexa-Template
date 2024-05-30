@@ -23,7 +23,7 @@ import java.util.UUID;
 @RequestMapping("/template")
 public class TemplateController {
 
-    private static final String NOFOUNDMESSAGE=  "Not Found";
+    private static final String NOTFOUNDMESSAGE =  "Not Found";
     private final ITemplateService templateService;
     private final IExternalService externalService;
 
@@ -53,14 +53,14 @@ public class TemplateController {
                             mediaType = "application/json",
                             schema = @Schema(implementation = TemplateResponseDTO.class))
             }),
-            @ApiResponse(responseCode = "404", description = NOFOUNDMESSAGE,
+            @ApiResponse(responseCode = "404", description = NOTFOUNDMESSAGE,
                     content = { @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = NotFoundException.class)) })
     })
     @GetMapping("/{id}")
     public TemplateResponseDTO getTemplate(@PathVariable UUID id) {
-        var template = templateService.getTemplateById(id).orElseThrow(()-> new NotFoundException(NOFOUNDMESSAGE));
+        var template = templateService.getTemplateById(id).orElseThrow(()-> new NotFoundException(NOTFOUNDMESSAGE));
         return TemplateResponseDTO.from(template);
     }
 
@@ -78,7 +78,7 @@ public class TemplateController {
     })
     @GetMapping("/{id}/additionalTemplateUserInfo")
     public AdditionalTemplateUserInfoDTO getAdditionalTemplateUserInfo(@PathVariable UUID id) {
-        var template = templateService.getTemplateById(id).orElseThrow(()-> new NotFoundException(NOFOUNDMESSAGE));
+        var template = templateService.getTemplateById(id).orElseThrow(()-> new NotFoundException(NOTFOUNDMESSAGE));
         return AdditionalTemplateUserInfoDTO.from(
                 externalService.getAdditionalTemplateUserInfo(template.getExternalReferenceId())
         );
@@ -103,7 +103,7 @@ public class TemplateController {
 
     @DeleteMapping("/{id}")
     public TemplateResponseDTO deleteTemplate(@PathVariable UUID id) {
-        var template = templateService.getTemplateById(id).orElseThrow(()-> new NotFoundException("Not Found"));
+        var template = templateService.getTemplateById(id).orElseThrow(()-> new NotFoundException(NOTFOUNDMESSAGE));
         templateService.deleteTemplateById(id);
         return TemplateResponseDTO.from(template);
     }

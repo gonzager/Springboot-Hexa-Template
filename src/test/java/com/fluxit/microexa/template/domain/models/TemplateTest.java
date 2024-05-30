@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Template Test Domian")
 class TemplateTest {
 
-    private Template createInvalidTemplate(Long externalReferenceId) {
+    private Template createTemplate(Long externalReferenceId) {
         return Template.builder()
                 .id(UUID.randomUUID())
                 .name("Test Template")
@@ -19,21 +19,25 @@ class TemplateTest {
                 .build();
     }
 
+    private Template createInvalidTemplate() {
+        return Template.builder()
+                .id(UUID.randomUUID())
+                .name("Test Template")
+                .build();
+    }
+
     @Test
     @DisplayName("when Template is build ok")
     void buidOKTemplateTest() {
         assertNotNull(
-                createInvalidTemplate(0L)
+                createTemplate(0L)
         );
     }
     @Test
     @DisplayName("when template does not have external reference id")
-    void builderDoesNotHaveCounter() {
+    void builderDoesNotExternalReferenceId() {
         assertThrows(NullPointerException.class,
-                () -> Template.builder()
-                        .id(UUID.randomUUID())
-                        .name("Test Template")
-                        .build()
+                this::createInvalidTemplate
         );
     }
 
@@ -41,21 +45,21 @@ class TemplateTest {
     @DisplayName("when template have negative external reference id")
     void builderHaveNegativeExternalReferenceId() {
         assertThrows(IllegalCounterStateException.class,
-                () -> createInvalidTemplate(-1L)
+                () -> createTemplate(-1L)
         );
     }
     @Test
     @DisplayName("when Template is available")
     void templateIsAvailableTest() {
         assertTrue(
-                createInvalidTemplate(1L).isAvailable()
+                createTemplate(1L).isAvailable()
         );
     }
     @Test
     @DisplayName("when Template is not available")
     void templateIsNotAvailableTest() {
         assertFalse(
-                createInvalidTemplate(0L).isAvailable()
+                createTemplate(0L).isAvailable()
         );
     }
 }
