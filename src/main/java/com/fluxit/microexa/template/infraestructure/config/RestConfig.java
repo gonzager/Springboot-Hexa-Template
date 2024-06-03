@@ -18,7 +18,7 @@ import java.time.Duration;
 public class RestConfig {
     private final Integer connectTimeout;
     private final Integer readTimeout;
-    public RestConfig(@Value("${app.api.rest.connecttimeout}") Integer connectTimeout , @Value("${app.api.rest.readTimeout}") Integer readTimeout){
+    public RestConfig(@Value("${info.rest.connecttimeout}") Integer connectTimeout , @Value("${info.rest.readTimeout}") Integer readTimeout){
         this.connectTimeout = connectTimeout;
         this.readTimeout = readTimeout;
     }

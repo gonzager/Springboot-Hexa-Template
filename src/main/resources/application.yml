@@ -1,18 +1,20 @@
+info:
+  application:
+    name: '@project.name@'
+    description: '@project.description@'
+    version: '@project.version@'
+  doc:
+    version: 1.0
+  rest:
+    connecttimeout: 3000
+    readTimeout: 300
+
 server:
   port: 8080
 
 spring:
   application:
     name: template
-
-app:
-  api:
-    doc:
-      version: 1.0
-    rest:
-      connecttimeout: 3000
-      readTimeout: 300
-
 
   h2:
     console:
@@ -36,6 +38,9 @@ logging:
     root: INFO
 
 management:
+  info:
+    env:
+      enabled: true
   endpoints:
     web:
       exposure:
@@ -45,6 +50,7 @@ management:
       show-details: always
       probes:
         enabled: true
+
 
 springdoc:
   swagger-ui:

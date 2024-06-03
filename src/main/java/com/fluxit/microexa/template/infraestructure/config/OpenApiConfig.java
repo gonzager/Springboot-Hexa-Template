@@ -11,7 +11,7 @@ public class OpenApiConfig {
     private final String appApiName;
     private final String appApiVersion;
 
-    public OpenApiConfig(@Value("${spring.application.name}") String appApiName , @Value("${app.api.doc.version}") String appApiVersion) {
+    public OpenApiConfig(@Value("${info.application.name}") String appApiName , @Value("${info.doc.version}") String appApiVersion) {
         this.appApiName = appApiName;
         this.appApiVersion = appApiVersion;
     }
