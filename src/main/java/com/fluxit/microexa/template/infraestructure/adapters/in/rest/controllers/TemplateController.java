@@ -27,6 +27,7 @@ public class TemplateController {
     private final ITemplateService templateService;
     private final IExternalService externalService;
 
+
     public TemplateController(ITemplateService templateService, IExternalService externalService) {
         this.templateService = templateService;
         this.externalService = externalService;
