@@ -8,6 +8,10 @@ info:
   rest:
     connecttimeout: 3000
     readTimeout: 300
+    productourl: http://localhost:8081/productos/
+
+
+
 
 server:
   port: 8080

@@ -5,8 +5,10 @@ import com.fluxit.microexa.template.application.services.ITemplateService;
 import com.fluxit.microexa.template.infraestructure.adapters.in.rest.dtos.AdditionalTemplateUserInfoDTO;
 import com.fluxit.microexa.template.infraestructure.adapters.in.rest.dtos.TemplateRequestDTO;
 import com.fluxit.microexa.template.infraestructure.adapters.in.rest.dtos.TemplateResponseDTO;
+import com.fluxit.microexa.template.infraestructure.adapters.in.rest.dtos.TemplateWithProductDTO;
 import com.fluxit.microexa.template.infraestructure.adapters.in.rest.exceptions.BadRequestErrors;
 import com.fluxit.microexa.template.infraestructure.adapters.in.rest.exceptions.NotFoundException;
+import com.fluxit.microexa.template.infraestructure.adapters.out.rest.RestExternalProductoAdapter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,6 +17,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.UUID;
@@ -26,11 +29,13 @@ public class TemplateController {
     private static final String NOTFOUNDMESSAGE =  "Not Found";
     private final ITemplateService templateService;
     private final IExternalService externalService;
+    private final RestExternalProductoAdapter restTemplateProductoAdapter;
 
 
-    public TemplateController(ITemplateService templateService, IExternalService externalService) {
+    public TemplateController(ITemplateService templateService, IExternalService externalService, RestExternalProductoAdapter restTemplateProductoAdapter) {
         this.templateService = templateService;
         this.externalService = externalService;
+        this.restTemplateProductoAdapter = restTemplateProductoAdapter;
     }
 
     @GetMapping
@@ -107,5 +112,16 @@ public class TemplateController {
         var template = templateService.getTemplateById(id).orElseThrow(()-> new NotFoundException(NOTFOUNDMESSAGE));
         templateService.deleteTemplateById(id);
         return TemplateResponseDTO.from(template);
+    }
+
+    @GetMapping("/{id}/producto")
+    public TemplateWithProductDTO getTemplateWithProductDto(@PathVariable UUID id) {
+        var template = templateService.getTemplateById(id).orElseThrow(()-> new NotFoundException(NOTFOUNDMESSAGE));
+        var ProductoSinFabricanteDTO = restTemplateProductoAdapter.getPExternalProductoById(template.getExternalReferenceId());
+        return new TemplateWithProductDTO(
+                TemplateResponseDTO.from(template),
+                ProductoSinFabricanteDTO
+        );
+
     }
 }
