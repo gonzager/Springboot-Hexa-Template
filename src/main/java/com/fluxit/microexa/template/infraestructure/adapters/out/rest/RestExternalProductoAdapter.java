@@ -3,7 +3,6 @@ package com.fluxit.microexa.template.infraestructure.adapters.out.rest;
 import com.fluxit.microexa.template.infraestructure.adapters.in.rest.dtos.ProductoSinFabricanteDTO;
 import com.fluxit.microexa.template.infraestructure.adapters.in.rest.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.web.embedded.TomcatVirtualThreadsWebServerFactoryCustomizer;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
